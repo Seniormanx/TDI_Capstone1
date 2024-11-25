@@ -5,7 +5,7 @@ data_hub=./data-hub
 
 if 
 	[ ! -d "$data_hub" ]; then
-	echo "The "$data_hub" not found!"
+	echo "The '$data_hub' not found!"
 	exit 1
 fi
 
