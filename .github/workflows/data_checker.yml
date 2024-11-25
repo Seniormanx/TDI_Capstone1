@@ -3,10 +3,10 @@ name: Data Checker
 on:
   push:
     paths:
-      - 'data/**'
+      - 'data-hub/**'
   pull_request:
     paths:
-      - 'data/**'
+      - 'data-hub/**'
 
 jobs:
   detect_new_data:
