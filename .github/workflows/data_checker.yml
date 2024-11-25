@@ -9,32 +9,25 @@ on:
       - 'data-hub/**'
 
 jobs:
-  detect_new_data:
+  lint:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Checkout repository
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      # Step 2: Detect changed files in the 'data-hub' folder
-      - name: Display changed files
-        id: detect-data
-        uses: tj-actions/changed-files@v45
-        with:
-          files: data-hub/*.{csv}
+      - name: Install ShellCheck
+        run: sudo apt-get install -y shellcheck
 
-      # Step 3: Run data integration script if changes are detected
-      - name: Run data integration script if changes detected
-        if: steps.detect-data.outputs.any_changed == 'true'
+      - name: Run Linter
         run: |
-          echo "Changes detected in 'data-hub' folder."
-          echo "List of changed files: ${{ steps.detect-data.outputs.all_changed_files }}"
+          find . -type f -name "*.sh" | while read -r script; do
+            echo "Linting $script"
+            shellcheck "$script"
 
   data_integration:
     runs-on: ubuntu-latest
-    needs: detect_new_data
-    if: steps.detect-data.outputs.any_changed == 'true'
+    needs: lint
+    if: 
 
     steps:
       # Step 1: Checkout code
