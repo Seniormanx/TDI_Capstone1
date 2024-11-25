@@ -31,5 +31,5 @@ for file in "$data_hub"/*.csv; do
 
 done
 
-echo "Process complete"
+echo "Data integration complete"
 
