@@ -14,28 +14,54 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Checkout repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # Step 2: Install ShellCheck
       - name: Install ShellCheck
-        run: sudo apt install shellcheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
 
+      # Step 3: Run ShellCheck on scripts
       - name: Run Linter
-        run:  shellcheck scripts/*.sh
+        run: shellcheck scripts/*.sh
+
+  monitor_changes:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Monitor folder changes using dorny/paths-filter
+      - name: Monitor Folders for Changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            data:
+              - 'data-hub/**'
+            scripts:
+              - 'scripts/**'
+
+      # Step 3: Print which folders were changed
+      - name: Print Changed Folders
+        run: |
+          echo "Data folder changed: ${{ steps.changes.outputs.data }}"
+          echo "Scripts folder changed: ${{ steps.changes.outputs.scripts }}"
 
   data_integration:
     runs-on: ubuntu-latest
-    needs: lint
-
+    needs: [lint, monitor_changes]
     steps:
-      # Step 1: Checkout code
-      - name: Checkout code
-        uses: actions/checkout@v4
+      # Step 1: Checkout repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
       # Step 2: Make the Bash script executable
-      - name: Make the script executable
+      - name: Make Script Executable
         run: chmod +x scripts/data_integrate.sh
 
       # Step 3: Run the Bash script
-      - name: Run the Bash script
+      - name: Run Data Integration Script
         run: ./scripts/data_integrate.sh
