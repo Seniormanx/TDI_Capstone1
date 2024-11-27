@@ -93,11 +93,11 @@ jobs:
       # Step 5: Commit and push changes if modified
       - name: Commit and Push Changes
         if: env.changed == 'true'
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.email "waletomi5@gmail.com"
           git config --global user.name "Seniormanx"
           git add db/database.csv
           git commit -m "Updated database.csv after integration"
           git push origin main
-        env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
