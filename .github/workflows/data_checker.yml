@@ -99,4 +99,5 @@ jobs:
           git add db/database.csv
           git commit -m "Updated database.csv after integration"
           git push origin main
-
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
