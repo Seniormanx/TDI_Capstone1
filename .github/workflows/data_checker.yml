@@ -90,7 +90,7 @@ jobs:
       - name: Check the updated dataset
         run:  wc -l db/database.csv
 
-      # Step 5: Commit and push changes if modified
+      # Step 5: Commit changes if modified
       - name: Commit 
         if: env.changed == 'true'
         env: 
@@ -99,9 +99,11 @@ jobs:
           git config --global user.email "waletomi5@gmail.com"
           git config --global user.name "Seniormanx"
           git add db/database.csv
-          git commit -m "Updated database.csv after integration"
+          git commit -m "Updated db/database.csv after integration"
+
+      # Step 6: Push changes to the repository
       - name: Push changes
-          uses: ad-m/github-push-action@master
-          with: 
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            branch: main
+        uses: ad-m/github-push-action@master
+        with: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
