@@ -6,7 +6,6 @@ on:
       - 'data-hub/**'
       - 'scripts/**'
   schedule:
-    - cron: '0 */1 * * *' # every hour
 
   pull_request:
     paths:
@@ -85,4 +84,4 @@ jobs:
       # Step 4: Check the updated dataset
       - name: Check the updated dataset
         run:  wc -l db/database.csv
-        
+
