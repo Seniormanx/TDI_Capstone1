@@ -59,7 +59,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global username "Seniormanx"
           git add data-hub/**
           git commit -m "New data changes in the data-hub folder"
           git push origin main
