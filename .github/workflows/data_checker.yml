@@ -100,10 +100,6 @@ jobs:
           git config --global user.name "Seniormanx"
           git add db/database.csv
           git commit -m "Updated db/database.csv after integration"
-
-      # Step 6: Push changes to the repository
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with: 
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+          git fetch origin master
+          git push origin HEAD:master
+          
