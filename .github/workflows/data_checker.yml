@@ -91,7 +91,7 @@ jobs:
         run:  wc -l db/database.csv
 
       # Step 5: Commit and push changes if modified
-      - name: Commit and Push Changes
+      - name: Commit 
         if: env.changed == 'true'
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -100,4 +100,8 @@ jobs:
           git config --global user.name "Seniormanx"
           git add db/database.csv
           git commit -m "Updated database.csv after integration"
-          git push origin main
+      - name: Push changes
+          uses: ad-m/github-push-action@master
+          with: 
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            branch: main
