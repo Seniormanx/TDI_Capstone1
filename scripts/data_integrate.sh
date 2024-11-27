@@ -1,5 +1,7 @@
 #!/bin/bash 
 
+mkdir db
+
 # check if we have the datahub folder
 data_hub=./data-hub 
 
