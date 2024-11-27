@@ -61,9 +61,14 @@ jobs:
         run: |
           git config --global user.email "waletomi5@gmail.com"
           git config --global user.name "Seniormanx"
-          git add data-hub/**
-          git commit -m "New data changes in the data-hub folder"
-          git push origin main
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "Changes detected. Adding, committing, and pushing changes..."
+            git add data-hub/**
+            git commit -m "New data changes in the data-hub folder"
+            git push origin main
+          else  
+            echo "No changes to be made."
+          fi
 
   data_integration:
     runs-on: ubuntu-latest
